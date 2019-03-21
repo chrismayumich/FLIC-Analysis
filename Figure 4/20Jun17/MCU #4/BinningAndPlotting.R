@@ -1,0 +1,67 @@
+#---------Setup---------------
+source("SingleWellChamber.R")
+source("SaveBinnedData.R")
+p<-ParametersClass.SingleWell()
+p<-SetParameter(p, Feeding.Threshold.Value = 40, Feeding.Interval.Minimum = 40,
+                Feeding.Minevents=5, Tasting.Threshold.Interval=c(10,40))
+
+binInterval = 30 #Set to desired interval in minutes. 
+#Note: Anytime this interval changes, the 'Bin Data' section needs to be re-run 
+#      before saving or plotting data.
+#---------Setup---------------
+
+
+#--------Bin Data-------------
+#Change numeric values to correspond to data
+dfm2 <- DFMClass(2,p)
+#bindfm2 <- BinFeedingData.Licks(dfm2, binInterval)
+
+dfm3 <- DFMClass(3,p)
+#bindfm3 <- BinFeedingData.Licks(dfm3, binInterval)
+
+dfm4 <- DFMClass(4,p)
+#bindfm4 <- BinFeedingData.Licks(dfm4, binInterval)
+
+dfm5 <- DFMClass(5,p)
+#bindfm5 <- BinFeedingData.Licks(dfm5, binInterval)
+#--------Bin Data-------------
+
+
+#------Save to Excel----------
+# Change numeric values and file names below to correspond to data
+BinFeedingData.Licks.SaveResults(dfm2, bindfm2, "M02_20Jun2017.xlsx", binInterval)
+
+BinFeedingData.Licks.SaveResults(dfm3, bindfm3, "M03_20Jun2017.xlsx", binInterval)
+
+BinFeedingData.Licks.SaveResults(dfm4, bindfm4, "M04_20Jun2017.xlsx", binInterval)
+
+BinFeedingData.Licks.SaveResults(dfm5, bindfm5, "M05_20Jun2017.xlsx", binInterval)
+#-------Save to Excel----------
+
+
+#---------Plotting-------------
+#Update the dfm##, bindfm##, and plot title values
+BinFeedingData.Licks.PlotWellsByDay(dfm11, bindfm11, binInterval, title="M11 06Dec16") 
+
+BinFeedingData.Licks.PlotWellsByDay(dfm12, bindfm12, binInterval, title="M12 06Dec16")
+
+BinFeedingData.Licks.PlotWellsByDay(dfm13, bindfm13, binInterval, title="M13 06Dec16")
+
+BinFeedingData.Licks.PlotWellsByDay(dfm14, bindfm14, binInterval, title="M14 06Dec16")
+#---------Plotting-------------
+
+
+#------------Events------------
+#calculate average event duration per bin
+binevents2<-BinFeedingData.Events(dfm2,binInterval)
+write.xlsx(binevents2,"Ev02_20Jun_30m.xlsx")
+
+binevents3<-BinFeedingData.Events(dfm3,binInterval)
+write.xlsx(binevents3,"Ev03_20Jun_30m.xlsx")
+
+binevents4<-BinFeedingData.Events(dfm4,binInterval)
+write.xlsx(binevents4,"Ev04_20Jun_30m.xlsx")
+
+binevents5<-BinFeedingData.Events(dfm5,binInterval)
+write.xlsx(binevents5,"Ev05_20Jun_30m.xlsx")
+#------------Events------------
